@@ -1,49 +1,39 @@
-from TwitterSearch import *
+from searchtweets import load_credentials
+from searchtweets import collect_results
+from searchtweets import gen_rule_payload
+
 from textblob import TextBlob
-import tweepy
+import yaml
 import pandas as pd
 import re
-#import numpy as np
+import numpy as np
 #from GUI import text
 
-auth = tweepy.OAuthHandler('JUBWToPuyPfmzg8n117ZTllfB', 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1')
-auth.set_access_token('1172272055183728640-nLQg9fvsLVieB9BXSsJq86a6kMmR8p', '5ogC7PXA1nmlNd5FCYtNaSIhF7tyA5K7CZzNBhi8qIhv1')
+config = dict(
+    search_tweets_api = dict(
+        account_type = 'premium',
+        endpoint = 'https://api.twitter.com/1.1/tweets/search/fullarchive/dev.json',
+        consumer_key = 'JUBWToPuyPfmzg8n117ZTllfB',
+        consumer_secret = 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1'
+    )
+)
 
-api = tweepy.API(auth)
-
-try:
-    api.verify_credentials()
-    print("Authentication OK")
-except:
-    print("Error during authentication")
-
-try:
-    tso = TwitterSearchOrder()
-    #tso.set_keywords(['Goofy', 'Nyancat'], or_operator = True)
-    #tso.add_keyword('BMW')
-    tso.set_keywords(['piss', 'after eating this'])
-
-    ts = TwitterSearch(
-            consumer_key = 'JUBWToPuyPfmzg8n117ZTllfB',
-            consumer_secret = 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1',
-            access_token = '1172272055183728640-nLQg9fvsLVieB9BXSsJq86a6kMmR8p',
-            access_token_secret = '5ogC7PXA1nmlNd5FCYtNaSIhF7tyA5K7CZzNBhi8qIhv1'
-        )
-
-    for tweet in ts.search_tweets_iterable(tso):
-        print('@%s tweeted: %s' % (tweet['user']['screen_name'], tweet['text']))
-        for tw in api.user_timeline(id = tweet['user']['screen_name'], lang="en"):
-            if tw.text == tweet['text']:
-                obj = api.get_status(tw.id)
-                print("likes for this tweet: %d" % obj.favorite_count)
-                print("retweets of this tweet: %d" % obj.retweet_count)
+premium_search_args = load_credentials("twitter_keys_fullarchive.yaml",
+                                       yaml_key="search_tweets_api",
+                                       env_overwrite=False)
 
 
+query = "apocalypto"
+rule = gen_rule_payload(query, results_per_call=100)
+tweets = collect_results(rule,
+                         max_results=100,
+                         result_stream_args=premium_search_args)
 
-
-
-except TwitterSearchException as e:
-    print(e)
+for tweet in tweets:
+    print("text: %s" % tweet.text)
+    print("number of likes: %d" % tweet.favorite_count)
+    print("number of retweets: %d" % tweet.retweet_count)
+    print("is a retweet: %s" % hasattr(tweet, 'retweeted_status'))
 
 
 
