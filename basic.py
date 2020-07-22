@@ -11,8 +11,11 @@ def clean_text(text):
     text = re.sub(r'#', '', text) # Removing '#' 
     text = re.sub(r'RT[\s]+', '', text) # Removing retweet symbols
     text = re.sub(r'https?:\/\/\S+', '', text) # Removing hyper links
-
     return text
+
+def Polarity(text):
+    return TextBlob(text).sentiment.polarity
+
 
 auth = tweepy.OAuthHandler('JUBWToPuyPfmzg8n117ZTllfB', 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1')
 auth.set_access_token('1172272055183728640-nLQg9fvsLVieB9BXSsJq86a6kMmR8p', '5ogC7PXA1nmlNd5FCYtNaSIhF7tyA5K7CZzNBhi8qIhv1')
@@ -27,7 +30,9 @@ except:
 
 try:
     tso = TwitterSearchOrder()
-    tso.set_keywords(['piss', 'after eating this'])
+    #tso.set_keywords(['after eating this', 'piss'])
+    #tso.set_keywords(['Benefits of having sites on Cloudflare:'])
+    tso.set_keywords(['Also planning something fun for Tuesday'])
     ts = TwitterSearch(
             consumer_key = 'JUBWToPuyPfmzg8n117ZTllfB',
             consumer_secret = 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1',
@@ -47,12 +52,15 @@ try:
                 clean_list.append(cleaned)
                 favorited_list.append(obj.favorite_count)
                 retweet_list.append(obj.retweet_count)
+                print("truncated ? %s" % obj.truncated)
 
     df = pd.DataFrame( [tweet['user']['screen_name'] for tweet in ts.search_tweets_iterable(tso)] , columns = ['User'] )
-
     df['Tweet Text'] = clean_list
-    df['Number of Favorites'] = favorite_count
-    df['Number of Retweets'] = retweet_count
+    df['Number of Favorites'] = favorited_list
+    df['Number of Retweets'] = retweet_list
+    df['Polarity'] = df['Tweet Text'].apply(Polarity)
+
+    print(df)
 
     
 
