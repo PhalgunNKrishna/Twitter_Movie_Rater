@@ -23,7 +23,7 @@ premium_search_args = load_credentials("twitter_keys_fullarchive.yaml",
                                        env_overwrite=False)
 
 
-query = "I got 3 phones. 2 are landlines"
+query = "If this were green KSI"
 rule = gen_rule_payload(query, from_date="2017-09-01", to_date="2020-07-19", results_per_call=100)
 tweets = collect_results(rule,
                          max_results=100,
