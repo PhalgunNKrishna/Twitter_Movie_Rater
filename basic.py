@@ -31,8 +31,8 @@ except:
 try:
     tso = TwitterSearchOrder()
     #tso.set_keywords(['after eating this', 'piss'])
-    #tso.set_keywords(['Benefits of having sites on Cloudflare:'])
-    tso.set_keywords(['Also planning something fun for Tuesday'])
+    tso.set_keywords(['Benefits of having sites on Cloudflare:'])
+    #tso.set_keywords(['Also planning something fun for Tuesday'])
     ts = TwitterSearch(
             consumer_key = 'JUBWToPuyPfmzg8n117ZTllfB',
             consumer_secret = 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1',
@@ -43,6 +43,7 @@ try:
     clean_list = []
     favorited_list = []
     retweet_list = []
+    its_a_retweet = []
 
     for tweet in ts.search_tweets_iterable(tso):
         for tw in api.user_timeline(id = tweet['user']['screen_name'], lang="en"):
@@ -52,12 +53,15 @@ try:
                 clean_list.append(cleaned)
                 favorited_list.append(obj.favorite_count)
                 retweet_list.append(obj.retweet_count)
+                its_a_retweet.append(hasattr(tw, 'retweeted_status'))
                 print("truncated ? %s" % obj.truncated)
+                print("A retweet ? %s" % hasattr(tw, 'retweeted_status'))
 
     df = pd.DataFrame( [tweet['user']['screen_name'] for tweet in ts.search_tweets_iterable(tso)] , columns = ['User'] )
     df['Tweet Text'] = clean_list
     df['Number of Favorites'] = favorited_list
     df['Number of Retweets'] = retweet_list
+    df['Retweet?'] = its_a_retweet
     df['Polarity'] = df['Tweet Text'].apply(Polarity)
 
     print(df)
