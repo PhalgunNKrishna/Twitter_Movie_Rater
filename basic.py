@@ -36,26 +36,25 @@ try:
         )
 
     clean_list = []
+    favorited_list = []
+    retweet_list = []
 
     for tweet in ts.search_tweets_iterable(tso):
-        print('@%s tweeted: %s' % (tweet['user']['screen_name'], tweet['text']))
         for tw in api.user_timeline(id = tweet['user']['screen_name'], lang="en"):
             if tw.text == tweet['text']:
                 obj = api.get_status(tw.id)
-                print("likes for this tweet: %d" % obj.favorite_count)
-                print("retweets of this tweet: %d" % obj.retweet_count)
                 cleaned = clean_text(obj.text)
                 clean_list.append(cleaned)
-                print(cleaned)
+                favorited_list.append(obj.favorite_count)
+                retweet_list.append(obj.retweet_count)
 
     df = pd.DataFrame( [tweet['user']['screen_name'] for tweet in ts.search_tweets_iterable(tso)] , columns = ['User'] )
 
-    print(clean_list)
+    df['Tweet Text'] = clean_list
+    df['Number of Favorites'] = favorite_count
+    df['Number of Retweets'] = retweet_count
 
-    df['tweet'] = clean_list
-
-    print(df)
-
+    
 
 except TwitterSearchException as e:
     print(e)
