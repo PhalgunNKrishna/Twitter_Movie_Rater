@@ -49,14 +49,14 @@ try:
 
     # next 4 lines ending with "obj = api.get..." are to find the actual tweet object
     for tweet in ts.search_tweets_iterable(tso):
-                #tw_obj = api.get_status(tweet['id'])
+                tw_obj = api.get_status(tweet['id_str'])
                 cleaned = clean_text(tweet['text']) # removing unnecessary symbols from the tweet's string
                 clean_list.append(cleaned)
                 #favorited_list.append(obj.favorite_count)
                 #retweet_list.append(obj.retweet_count)
                 favorited_list.append(tweet['favorite_count'])
                 retweet_list.append(tweet['retweet_count'])
-                #its_a_retweet.append(hasattr(tw_obj, 'retweeted_status'))
+                its_a_retweet.append(hasattr(tw_obj, 'retweeted_status'))
 
     # creating the data frame
     # To make a column, you need a list
@@ -65,6 +65,7 @@ try:
     df['Number of Favorites'] = favorited_list
     df['Number of Retweets'] = retweet_list
     df['Polarity'] = df['Tweet Text'].apply(Polarity)
+    df['Retweet?'] = its_a_retweet
 
     print(df)
 
