@@ -38,18 +38,20 @@ try:
             consumer_secret = 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1',
             access_token = '1172272055183728640-nLQg9fvsLVieB9BXSsJq86a6kMmR8p',
             access_token_secret = '5ogC7PXA1nmlNd5FCYtNaSIhF7tyA5K7CZzNBhi8qIhv1'
-        )
+            )
 
+    # lists that will become columns in our data frame
     clean_list = []
     favorited_list = []
     retweet_list = []
     its_a_retweet = []
 
+    # next 4 lines ending with "obj = api.get..." are to find the actual tweet object
     for tweet in ts.search_tweets_iterable(tso):
         for tw in api.user_timeline(id = tweet['user']['screen_name'], lang="en"):
             if tw.text == tweet['text']:
                 obj = api.get_status(tw.id)
-                cleaned = clean_text(obj.text)
+                cleaned = clean_text(obj.text) # removing unnecessary symbols from the tweet's string
                 clean_list.append(cleaned)
                 favorited_list.append(obj.favorite_count)
                 retweet_list.append(obj.retweet_count)
@@ -57,6 +59,8 @@ try:
                 print("truncated ? %s" % obj.truncated)
                 print("A retweet ? %s" % hasattr(tw, 'retweeted_status'))
 
+    # creating the data frame
+    # To make a column, you need a list
     df = pd.DataFrame( [tweet['user']['screen_name'] for tweet in ts.search_tweets_iterable(tso)] , columns = ['User'] )
     df['Tweet Text'] = clean_list
     df['Number of Favorites'] = favorited_list
@@ -66,7 +70,7 @@ try:
 
     print(df)
 
-    
+
 
 except TwitterSearchException as e:
     print(e)
