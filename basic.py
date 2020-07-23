@@ -23,6 +23,7 @@ api = tweepy.API(auth)
 try:
     api.verify_credentials()
     print("Authentication OK")
+
 except:
     print("Error during authentication")
 
@@ -50,12 +51,12 @@ try:
     for tweet in ts.search_tweets_iterable(tso):
                 if count == 100:
                     break
-                tw_obj = api.get_status(tweet['id_str'])
-                user_list.append(tweet['user']['screen_name'])
+                tw_obj = api.get_status(tweet['id_str'])    # need the twitter object to check if it's a retweet
+                user_list.append(tweet['user']['screen_name'])  # user
                 cleaned = clean_text(tweet['text']) # removing unnecessary symbols from the tweet's string
                 clean_list.append(cleaned)
-                favorited_list.append(tweet['favorite_count'])
-                retweet_list.append(tweet['retweet_count'])
+                favorited_list.append(tweet['favorite_count']) # num of favorites
+                retweet_list.append(tweet['retweet_count']) # num of retweets
                 its_a_retweet.append(hasattr(tw_obj, 'retweeted_status'))
                 count += 1
 
@@ -69,8 +70,6 @@ try:
     df['Retweet?'] = its_a_retweet
 
     print(df)
-
-
 
 except TwitterSearchException as e:
     print(e)
