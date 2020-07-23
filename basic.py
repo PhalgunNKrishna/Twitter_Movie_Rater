@@ -3,8 +3,6 @@ from textblob import TextBlob
 import tweepy
 import pandas as pd
 import re
-#import numpy as np
-#from GUI import text
 
 def clean_text(text):
     text = re.sub(r'@[A-Za-z0-9]+', '', text) # Removing @ mentions 
@@ -30,10 +28,9 @@ except:
 
 try:
     tso = TwitterSearchOrder()
-    tso.set_keywords(['Hamilton'])
-    tso.set_count(50)
-    #tso.set_keywords(['Benefits of having sites on Cloudflare:'])
-    #tso.set_keywords(['Also planning something fun for Tuesday'])
+    #tso.set_keywords(['Apocalypto'])
+    tso.set_keywords(['Phantom Menace'])
+    tso.set_language('en')
     ts = TwitterSearch(
             consumer_key = 'JUBWToPuyPfmzg8n117ZTllfB',
             consumer_secret = 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1',
@@ -42,25 +39,29 @@ try:
             )
 
     # lists that will become columns in our data frame
+    user_list = []
     clean_list = []
     favorited_list = []
     retweet_list = []
     its_a_retweet = []
 
-    # next 4 lines ending with "obj = api.get..." are to find the actual tweet object
+    count = 0
+
     for tweet in ts.search_tweets_iterable(tso):
+                if count == 100:
+                    break
                 tw_obj = api.get_status(tweet['id_str'])
+                user_list.append(tweet['user']['screen_name'])
                 cleaned = clean_text(tweet['text']) # removing unnecessary symbols from the tweet's string
                 clean_list.append(cleaned)
-                #favorited_list.append(obj.favorite_count)
-                #retweet_list.append(obj.retweet_count)
                 favorited_list.append(tweet['favorite_count'])
                 retweet_list.append(tweet['retweet_count'])
                 its_a_retweet.append(hasattr(tw_obj, 'retweeted_status'))
+                count += 1
 
     # creating the data frame
     # To make a column, you need a list
-    df = pd.DataFrame( [tweet['user']['screen_name'] for tweet in ts.search_tweets_iterable(tso)] , columns = ['User'] )
+    df = pd.DataFrame(user_list)
     df['Tweet Text'] = clean_list
     df['Number of Favorites'] = favorited_list
     df['Number of Retweets'] = retweet_list
