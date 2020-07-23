@@ -4,6 +4,8 @@ import tweepy
 import pandas as pd
 import re
 
+def rating(avg):
+
 def clean_text(text):
     text = re.sub(r'@[A-Za-z0-9]+', '', text) # Removing @ mentions 
     text = re.sub(r'#', '', text) # Removing '#' 
@@ -49,7 +51,7 @@ try:
     count = 0
 
     for tweet in ts.search_tweets_iterable(tso):
-                if count == 100:
+                if count == 50:
                     break
                 tw_obj = api.get_status(tweet['id_str'])    # need the twitter object to check if it's a retweet
                 user_list.append(tweet['user']['screen_name'])  # user
@@ -74,10 +76,14 @@ try:
     #gathering polarity data from df
     pol_count = 0
     for i in df.index:
-        pol_count += df['Polarity'][i] * df['Number of Favorites'][i] + 2 * df['Number of Retweets'][i]
-    avg_pol = pol_count / 100
+        if df['Retweet?'][i] == false and df['Number of Favorites'] > 0:
+            pol_count += df['Polarity'][i] * df['Number of Favorites'][i] + 2 * df['Number of Retweets'][i]
+        else if df['Number of Favorites'] == 0:
+            pol_count += df['Polarity'][i] + 2 * df['Number of Retweets'][i]
+    avg_pol = pol_count / 50
+
     print("average polarity = %d" % avg_pol)
-    print("This movie has a rating of $d out of 5 stars" % rating)
+    print("This movie has a rating of %d out of 5 stars" % rating(avg_pol))
 
     #5 Most Popular Tweets
 
