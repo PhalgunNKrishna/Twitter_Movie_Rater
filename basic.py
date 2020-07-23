@@ -71,6 +71,20 @@ try:
 
     print(df)
 
+    #gathering polarity data from df
+    pol_count = 0
+    for i in df.index:
+        pol_count += df['Polarity'][i] * df['Number of Favorites'][i] + 2 * df['Number of Retweets'][i]
+    avg_pol = pol_count / 100
+    print("average polarity = %d" % avg_pol)
+    print("This movie has a rating of $d out of 5 stars" % rating)
+
+    #5 Most Popular Tweets
+
+    #5 Most Positive Tweets
+
+    #5 Most Negative Tweets
+
 except TwitterSearchException as e:
     print(e)
 
