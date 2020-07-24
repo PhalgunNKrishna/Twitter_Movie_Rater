@@ -4,7 +4,15 @@ import tweepy
 import pandas as pd
 import re
 
-#def rating(avg):
+def rating(avg):
+    if avg < -5:
+        return "very bad movie"
+    elif avg > -5 && avg < 0:
+        return "poor movie"
+    elif avg > 0 && avg < 5:
+        return "decent movie"
+    else:
+        return "great movie"
 
 def clean_text(text):
     text = re.sub(r'@[A-Za-z0-9]+', '', text) # Removing @ mentions 
@@ -81,13 +89,16 @@ try:
     avg_pol = float(pol_count/50.0)
 
     print("average polarity = ", avg_pol)
-    #print("This movie has a rating of %d out of 5 stars" % rating(avg_pol))
+    print(rating(avg_pol))
 
     #5 Most Popular Tweets
 
     #5 Most Positive Tweets
+    # 36:26
+    sortedDF = 
 
     #5 Most Negative Tweets
+    # 38:50
 
 except TwitterSearchException as e:
     print(e)
