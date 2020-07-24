@@ -4,7 +4,7 @@ import tweepy
 import pandas as pd
 import re
 
-def rating(avg):
+#def rating(avg):
 
 def clean_text(text):
     text = re.sub(r'@[A-Za-z0-9]+', '', text) # Removing @ mentions 
@@ -76,14 +76,14 @@ try:
     #gathering polarity data from df
     pol_count = 0
     for i in df.index:
-        if df['Retweet?'][i] == false and df['Number of Favorites'] > 0:
-            pol_count += df['Polarity'][i] * df['Number of Favorites'][i] + 2 * df['Number of Retweets'][i]
-        else if df['Number of Favorites'] == 0:
-            pol_count += df['Polarity'][i] + 2 * df['Number of Retweets'][i]
-    avg_pol = pol_count / 50
+        if df['Retweet?'][i] == "False" and df['Number of Favorites'][i] > 0:
+            pol_count += df['Polarity'][i] * df['Number of Favorites'][i] + 2.0 * df['Number of Retweets'][i]
+        elif df['Number of Favorites'][i] == 0:
+            pol_count += df['Polarity'][i] + 2.0 * df['Number of Retweets'][i]
+    avg_pol = pol_count/50.0
 
     print("average polarity = %d" % avg_pol)
-    print("This movie has a rating of %d out of 5 stars" % rating(avg_pol))
+    #print("This movie has a rating of %d out of 5 stars" % rating(avg_pol))
 
     #5 Most Popular Tweets
 
