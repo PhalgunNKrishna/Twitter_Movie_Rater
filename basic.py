@@ -74,15 +74,13 @@ try:
     print(df)
 
     #gathering polarity data from df
-    pol_count = 0
+    pol_count = 0.0
     for i in df.index:
-        if df['Retweet?'][i] == "False" and df['Number of Favorites'][i] > 0:
-            pol_count += df['Polarity'][i] * df['Number of Favorites'][i] + 2.0 * df['Number of Retweets'][i]
-        elif df['Number of Favorites'][i] == 0:
-            pol_count += df['Polarity'][i] + 2.0 * df['Number of Retweets'][i]
-    avg_pol = pol_count/50.0
+        pol_count += df['Polarity'][i] * df['Number of Favorites'][i] + df['Polarity'][i] * 2.0 * df['Number of Retweets'][i]
+        pol_count += df['Polarity'][i]
+    avg_pol = float(pol_count/50.0)
 
-    print("average polarity = %d" % avg_pol)
+    print("average polarity = ", avg_pol)
     #print("This movie has a rating of %d out of 5 stars" % rating(avg_pol))
 
     #5 Most Popular Tweets
