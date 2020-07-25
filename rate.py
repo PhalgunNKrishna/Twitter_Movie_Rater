@@ -7,7 +7,20 @@ import yaml
 import pandas as pd
 import re
 import numpy as np
+import tweepy
 #from GUI import text
+
+auth = tweepy.OAuthHandler('JUBWToPuyPfmzg8n117ZTllfB', 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1')
+auth.set_access_token('1172272055183728640-nLQg9fvsLVieB9BXSsJq86a6kMmR8p', '5ogC7PXA1nmlNd5FCYtNaSIhF7tyA5K7CZzNBhi8qIhv1')
+
+api = tweepy.API(auth)
+
+try:
+    api.verify_credentials()
+    print("Authentication OK")
+
+except:
+    print("Error during authentication")
 
 config = dict(
     search_tweets_api = dict(
@@ -34,7 +47,8 @@ for tweet in tweets:
     print("text: %s" % tweet.text)
     print("number of likes: %d" % tweet.favorite_count)
     print("number of retweets: %d" % tweet.retweet_count)
-    print("is a retweet: %s" % hasattr(tweet, 'retweeted_status'))
+    tw_obj = api.get_status(tweet.id)
+    print("is a retweet: ", hasattr(tw_obj, 'retweeted_status'))
 
 
 
