@@ -68,7 +68,6 @@ try:
             clean_list.append(cleaned)
             favorited_list.append(tweet['favorite_count'])  # num of favorites
             retweet_list.append(tweet['retweet_count'])  # num of retweets
-            its_a_retweet.append(hasattr(tw_obj, 'retweeted_status'))
             count += 1
 
     # creating the data frame
