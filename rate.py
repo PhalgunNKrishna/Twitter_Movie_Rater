@@ -57,8 +57,8 @@ premium_search_args = load_credentials("twitter_keys_fullarchive.yaml",
 
 
 #query = "If this were green KSI"
-query = "Benefits of having sites on Cloudflare"
-rule = gen_rule_payload(query, from_date="2017-09-01", to_date="2020-07-19", results_per_call=100)
+query = "Apocalytpo"
+rule = gen_rule_payload(query, from_date="2017-09-01", to_date="2020-07-26", results_per_call=100)
 tweets = collect_results(rule,
         max_results=100,
         result_stream_args=premium_search_args)
@@ -73,11 +73,11 @@ its_a_retweet = []
 for tweet in tweets:
     tw_obj = api.get_status(tweet.id)
     if not hasattr(tw_obj, 'retweeted_status'):
-        user_list.append(tweet['user']['screen_name'])  # user
-        cleaned = clean_text(tweet['text'])  # removing unnecessary symbols from the tweet's string
+        user_list.append(tw_obj.user.screen_name)
+        cleaned = clean_text(tweet.text)
         clean_list.append(cleaned)
-        favorited_list.append(tweet['favorite_count'])  # num of favorites
-        retweet_list.append(tweet['retweet_count'])  # num of retweets
+        favorited_list.append(tweet.favorite_count)
+        retweet_list.append(tweet.retweet_count)
 
 # creating the data frame
 # To make a column, you need a list
