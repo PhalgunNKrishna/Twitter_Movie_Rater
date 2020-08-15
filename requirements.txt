@@ -16,9 +16,11 @@ regex==2020.7.14
 requests==2.22.0
 requests-oauthlib==1.3.0
 scipy==1.3.1
+searchtweets==1.7.6
 six==1.15.0
 textblob==0.15.3
 tqdm==4.48.0
 tweepy==3.9.0
+tweet-parser==1.13.2
 TwitterSearch==1.0.2
 urllib3==1.25.6
