@@ -6,8 +6,8 @@ import tweepy
 import pandas as pd
 import re
 
-HEIGHT = 700
-WIDTH = 800
+HEIGHT = 900
+WIDTH = 900
 
 auth = tweepy.OAuthHandler('JUBWToPuyPfmzg8n117ZTllfB', 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1')
 auth.set_access_token('1172272055183728640-nLQg9fvsLVieB9BXSsJq86a6kMmR8p', '5ogC7PXA1nmlNd5FCYtNaSIhF7tyA5K7CZzNBhi8qIhv1')
@@ -137,6 +137,9 @@ def find_polarity(topic):
 # GUI
 
 root = tk.Tk()
+
+scroll = Scrollbar(root)
+scroll.pack(side=RIGHT, fill=Y)
 
 canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
