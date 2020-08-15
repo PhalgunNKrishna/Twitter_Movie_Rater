@@ -138,9 +138,6 @@ def find_polarity(topic):
 
 root = tk.Tk()
 
-scroll = Scrollbar(root)
-scroll.pack(side=RIGHT, fill=Y)
-
 canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
 
@@ -150,6 +147,9 @@ background_label.place(relwidth=1, relheight=1)
 
 frame = tk.Frame(root, bg='#80c1ff', bd=5)
 frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.05, anchor='n')
+
+scroll = tk.Scrollbar(frame)
+scroll.pack(side='right', fill='y')
 
 entry = tk.Entry(frame, font=40)
 entry.place(relwidth=0.65, relheight=1)
