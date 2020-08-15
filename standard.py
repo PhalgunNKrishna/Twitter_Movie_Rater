@@ -6,7 +6,7 @@ import tweepy
 import pandas as pd
 import re
 
-HEIGHT = 900
+HEIGHT = 1000
 WIDTH = 900
 
 auth = tweepy.OAuthHandler('JUBWToPuyPfmzg8n117ZTllfB', 'lt0Psg46Nqzzaa4uel3wtSbaOyh9WiYIqx6ZH5xaExthndrsc1')
@@ -146,7 +146,7 @@ background_label = tk.Label(root, image=background_image)
 background_label.place(relwidth=1, relheight=1)
 
 frame = tk.Frame(root, bg='#80c1ff', bd=5)
-frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.05, anchor='n')
+frame.place(relx=0.5, rely=0.05, relwidth=0.75, relheight=0.05, anchor='n')
 
 scroll = tk.Scrollbar(frame)
 scroll.pack(side='right', fill='y')
@@ -158,7 +158,7 @@ button = tk.Button(frame, text="Find Polarity", font=40, command=lambda: find_po
 button.place(relx=0.7, relheight=1, relwidth=0.3)
 
 lower_frame = tk.Frame(root, bg='#80c1ff', bd=10)
-lower_frame.place(relx=0.5, rely=0.20, relwidth=0.90, relheight=0.75, anchor='n')
+lower_frame.place(relx=0.5, rely=0.15, relwidth=0.90, relheight=0.81, anchor='n')
 
 label = tk.Label(lower_frame, anchor='nw', justify='left', bd=4)
 label.place(relwidth=1, relheight=1)

@@ -11,8 +11,8 @@ import re
 import numpy as np
 import tweepy
 
-HEIGHT = 2000
-WIDTH = 2000
+HEIGHT = 1000
+WIDTH = 900
 
 def rating(avg):
     if avg <= -5:
@@ -127,16 +127,13 @@ def find_polarity(topic):
     label['text'] += '\n' + "5 most negative tweets: " + '\n'
     j = 1
     for i in range(df['Tweet Text'].size, df['Tweet Text'].size - 5, -1):
-        label['text'] += str(i + 1) + ") " + sortedFavDF['Tweet Text'][i] + '\n'
+        label['text'] += str(j) + ") " + sortedFavDF['Tweet Text'][i - 1] + '\n'
         print(str(j) + ") " + sortedDF['Tweet Text'][i - 1] + ". Polarity: ", sortedFavDF['Polarity'][i - 1])
         j += 1
 
 # GUI
 
 root = tk.Tk()
-
-scroll = Scrollbar(root)
-scroll.pack(side=RIGHT, fill=Y)
 
 canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
@@ -146,7 +143,7 @@ background_label = tk.Label(root, image=background_image)
 background_label.place(relwidth=1, relheight=1)
 
 frame = tk.Frame(root, bg='#80c1ff', bd=5)
-frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.05, anchor='n')
+frame.place(relx=0.5, rely=0.05, relwidth=0.75, relheight=0.05, anchor='n')
 
 entry = tk.Entry(frame, font=40)
 entry.place(relwidth=0.65, relheight=1)
@@ -155,7 +152,7 @@ button = tk.Button(frame, text="Find Polarity", font=40, command=lambda: find_po
 button.place(relx=0.7, relheight=1, relwidth=0.3)
 
 lower_frame = tk.Frame(root, bg='#80c1ff', bd=10)
-lower_frame.place(relx=0.5, rely=0.20, relwidth=0.90, relheight=0.75, anchor='n')
+lower_frame.place(relx=0.5, rely=0.15, relwidth=0.90, relheight=0.81, anchor='n')
 
 label = tk.Label(lower_frame, anchor='nw', justify='left', bd=4)
 label.place(relwidth=1, relheight=1)
