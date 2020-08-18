@@ -26,7 +26,7 @@ python premium.py
 # Overview of the Project
 
 ## standard.py packages used
-With regard to standard.py, we found that the TwitterSearch and Tweepy packages worked best in tandem. Because TwitterSearch could only find tweets written in the last 30 days, it was perfectly suitable for the most basic developer account functions needed in standard.py. Tweepy was then used to to identify the tweet object corresponding to the tweet text found by TwitterSearch. The tweet object was needed to find the tweet's retweet status. A tweet's retweet status, the number of favorites it got, and number of retweets it had were all needed to scale the tweet's polarity. This polarity scaling based on popularity is detailed later in this README.  
+With regard to standard.py, we found that the TwitterSearch and Tweepy packages worked best in tandem. Because TwitterSearch could only find tweets written in the last 30 days, it was perfectly suitable for the most basic developer account functions needed in standard.py. Tweepy was then used to to identify the tweet object corresponding to the tweet text found by TwitterSearch. The tweet object was needed to find the tweet's retweet status and the hasattr() code was taken from https://stackoverflow.com/questions/18869688/twitter-api-check-if-a-tweet-is-a-retweet/18937252 . A tweet's retweet status, the number of favorites it got, and number of retweets it had were all needed to scale the tweet's polarity. This polarity scaling based on popularity is detailed later in this README.  
 
 The following snippet of code shows the metadata of the tweet and how the TwitterSearch and Tweepy packages were used: 
 
