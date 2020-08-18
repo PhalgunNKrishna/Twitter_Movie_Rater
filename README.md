@@ -13,7 +13,9 @@ pip install --user --requirement requirements.txt
 2. Run either of the two .py files, standard.py or premium.py using the command: 
 ```c 
 python standard.py
-``` or  
+``` 
+or  
+
 ```c
 python premium.py
 ```  
