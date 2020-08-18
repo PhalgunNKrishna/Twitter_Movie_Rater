@@ -22,3 +22,12 @@ python premium.py
 **Note:** standard.py utilizes the standard Twitter developer account subscription. The advantage in using standard.py is that Twitter API calls are limitless when using it. However, the disadvantages to using this program are that it can only collect tweets published in the past 30 days and runs noticeably slower than premium.py. While premium.py runs faster than standard.py and collects tweets dating to 2006, only 50 API calls can be made a month. **Therefore, please use premium.py sparingly.**  
 3. A python GUI will appear. Enter the movie title at the top and click "Find Polarity"  
 4. The top 5 most positive tweets, negative tweets, popular tweets will show in the GUI as well as the average polarity and overall rating of the movie will appear in the GUI. This information along with the polarity of the 15 showcased tweets is also displayed on Terminal.
+
+## Overview of the Project
+Ryan and I chose to use different Python packages for standard.py and premium.py.  
+
+# standard.py packages used
+With regard to standard.py, we found that the TwitterSearch and Tweepy packages worked best in tandem. Because TwitterSearch could only find tweets written in the last 30 days, it was perfectly suitable for the most basic developer account functions needed in standard.py. Tweepy was then used to to identify the tweet object corresponding to the tweet text found by TwitterSearch. The tweet object was needed to find the tweet's retweet status, number of favorites it received, and number of times it was retweeted. This tweet information was needed to scale the tweet's polarity based on the tweet's popularity.  
+
+# premium.py packages used
+
